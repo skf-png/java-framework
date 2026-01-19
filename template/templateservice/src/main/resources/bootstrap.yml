@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: template  # 应用名称
+  profiles:
+    active: ${RUN_ENV}     # 激活的环境（通过环境变量RUN_ENV指定）
+  cloud:
+    nacos:
+      discovery:           # Nacos服务发现配置
+#        username: nacos
+#        password: bite@123
+        namespace: framework-${RUN_ENV}  # 命名空间（关联环境变量）
+        server-addr: ${NACOS_ADDR}           # Nacos地址（环境变量）
+      config:              # Nacos配置中心配置
+        username: nacos
+        password: bite@123
+        namespace: frameworkjava-${RUN_ENV}
+        server-addr: ${NACOS_ADDR}
+        file-extension: yaml  # 配置文件格式为yaml
+
+# 日志输出格式配置
+logging:
+  pattern:
+    console: '[%thread] %-5level %logger{36} - %msg%n'
