@@ -2,16 +2,17 @@ package utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
+import javax.lang.model.type.ReferenceType;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
 
 @Slf4j
 public class JsonUtils {
@@ -92,7 +93,68 @@ public class JsonUtils {
         try {
             return OBJECT_MAPPER.readValue(str, clazz);
         } catch (JsonProcessingException e) {
-            log.error(e.getMessage());
+            log.warn(e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * json字符串转对象
+     * @param str json字符串
+     * @param typeReference 转换对象的类
+     * @return 转换后结果
+     * @param <T> 转换类型
+     */
+    public static <T> T StringToObject(String str, TypeReference<T> typeReference) {
+        if (!StringUtils.hasLength(str) ||  typeReference == null) {
+            return null;
+        }
+
+        try {
+            return OBJECT_MAPPER.readValue(str, typeReference);
+        } catch (JsonProcessingException e) {
+            log.warn(e.getMessage());
+            return null;
+        }
+    }
+    /**
+     * json字符串转列表，避免泛型擦除
+     * @param str json字符串
+     * @param clazz 转换对象的类
+     * @return 转换后结果
+     * @param <T> 转换类型
+     */
+    public static <T> T StringToList(String str, Class<T> clazz) {
+        if (!StringUtils.hasLength(str) ||  clazz == null) {
+            return null;
+        }
+        JavaType javaType = OBJECT_MAPPER.getTypeFactory().constructParametricType(List.class, clazz);
+
+        try {
+            return OBJECT_MAPPER.readValue(str, javaType);
+        } catch (JsonProcessingException e) {
+            log.warn(e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * json字符串转哈希表
+     * @param str json字符串
+     * @param clazz 转换对象的类
+     * @return 转换后结果
+     * @param <T> 转换类型
+     */
+    public static <T> T StringToMap(String str, Class<T> clazz) {
+        if (!StringUtils.hasLength(str) ||  clazz == null) {
+            return null;
+        }
+        JavaType javaType = OBJECT_MAPPER.getTypeFactory().constructMapType(HashMap.class, String.class,clazz);
+
+        try {
+            return OBJECT_MAPPER.readValue(str, javaType);
+        } catch (JsonProcessingException e) {
+            log.warn(e.getMessage());
             return null;
         }
     }
