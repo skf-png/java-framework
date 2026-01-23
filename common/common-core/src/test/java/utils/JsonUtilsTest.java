@@ -1,5 +1,6 @@
 package utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,6 +34,7 @@ class JsonUtilsTest {
         String json = "{\"id\":\"1\",\"name\":\"test\",\"gender\":\"0\"}";
         TestObj testObj = JsonUtils.StringToObject(json, TestObj.class);
         System.out.println(testObj);
+        StringUtils.isBlank("ss");
     }
     //TestObj(id=1, name=test, gender=0)
 }

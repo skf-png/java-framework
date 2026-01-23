@@ -11,6 +11,7 @@
         <module name="templateapi" />
         <module name="gateway" />
         <module name="common-core" />
+        <module name="common-domain" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -21,6 +22,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="common" options="" />
       <module name="common-core" options="-parameters" />
+      <module name="common-domain" options="-parameters" />
       <module name="framework" options="" />
       <module name="gateway" options="-parameters" />
       <module name="template" options="" />
