@@ -1,4 +1,5 @@
-import lombok.Generated;
+package framework;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -51,5 +52,8 @@ public class R<T> {
     }
     public static <T> R<T> fail(ResultCode resultCode) {
         return construct(resultCode.getCode(), resultCode.getMsg(), null);
+    }
+    public static <T> R<T> fail(int code, String msg) {
+        return construct(code, msg,  null);
     }
 }

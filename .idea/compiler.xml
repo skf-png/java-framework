@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="templateservice" />
+        <module name="common-security" />
         <module name="templateapi" />
         <module name="gateway" />
         <module name="common-core" />
@@ -23,6 +24,7 @@
       <module name="common" options="" />
       <module name="common-core" options="-parameters" />
       <module name="common-domain" options="-parameters" />
+      <module name="common-security" options="-parameters" />
       <module name="framework" options="" />
       <module name="gateway" options="-parameters" />
       <module name="template" options="" />

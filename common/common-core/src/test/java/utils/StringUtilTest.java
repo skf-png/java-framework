@@ -1,8 +1,7 @@
 package utils;
 
+import framework.utils.StringUtil;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class StringUtilTest {
 

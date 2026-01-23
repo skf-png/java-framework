@@ -1,3 +1,5 @@
+package framework;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
