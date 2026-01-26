@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import framework.constants.CommonConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
@@ -27,7 +28,7 @@ public class JsonUtils {
                                 false)
                         .configure(MapperFeature.USE_ANNOTATIONS, false)
                         .addModule(new JavaTimeModule())
-                        .defaultDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")) //todo 需要统一
+                        .defaultDateFormat(new SimpleDateFormat(CommonConstants.STANDARD_FORMAT)) //todo 需要统一
                         .serializationInclusion(JsonInclude.Include.NON_NULL)
                         .build();
     }

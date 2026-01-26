@@ -5,6 +5,7 @@ import framework.ResultCode;
 import framework.ServiceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.ObjectError;
@@ -130,15 +131,15 @@ public class GlobalExceptionHandler {
      * @param response 响应
      * @return 异常报文
      */
-//    @ExceptionHandler({ConstraintViolationException.class})
-//    public com.example.R<Void> handleConstraintViolationException(ConstraintViolationException e, HttpServletRequest request,
-//                                                      HttpServletResponse response) {
-//        String requestURI = request.getRequestURI();
-//        log.error("请求地址'{}', 发生参数校验异常",requestURI, e);
-//        setResponseCode(response,com.example.ResultCode.INVALID_PARA.getCode());
-//        String message = e.getMessage();
-//        return com.example.R.fail(com.example.ResultCode.INVALID_PARA.getCode(),message);
-//    }
+    @ExceptionHandler({ConstraintViolationException.class})
+    public R<Void> handleConstraintViolationException(ConstraintViolationException e, HttpServletRequest request,
+                                                      HttpServletResponse response) {
+        String requestURI = request.getRequestURI();
+        log.error("请求地址'{}', 发生参数校验异常",requestURI, e);
+        setResponseCode(response,ResultCode.INVALID_PARA.getCode());
+        String message = e.getMessage();
+        return R.fail(ResultCode.INVALID_PARA.getCode(),message);
+    }
 
 
     /**
