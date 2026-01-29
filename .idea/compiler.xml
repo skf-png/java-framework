@@ -9,10 +9,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="templateservice" />
         <module name="common-security" />
+        <module name="common-domain" />
         <module name="templateapi" />
+        <module name="common-redis" />
         <module name="gateway" />
         <module name="common-core" />
-        <module name="common-domain" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -24,6 +25,7 @@
       <module name="common" options="" />
       <module name="common-core" options="-parameters" />
       <module name="common-domain" options="-parameters" />
+      <module name="common-redis" options="-parameters" />
       <module name="common-security" options="-parameters" />
       <module name="framework" options="" />
       <module name="gateway" options="-parameters" />

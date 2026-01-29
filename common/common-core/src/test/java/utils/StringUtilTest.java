@@ -1,6 +1,6 @@
 package utils;
 
-import framework.utils.StringUtil;
+import framework.core.utils.StringUtil;
 import org.junit.jupiter.api.Test;
 
 class StringUtilTest {

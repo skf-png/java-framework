@@ -1,1 +1,1 @@
-framework.handler.GlobalExceptionHandler
+framework.security.GlobalExceptionHandler

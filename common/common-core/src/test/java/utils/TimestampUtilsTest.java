@@ -1,6 +1,6 @@
 package utils;
 
-import framework.utils.TimestampUtils;
+import framework.core.utils.TimestampUtils;
 import org.junit.jupiter.api.Test;
 
 class TimestampUtilsTest {
