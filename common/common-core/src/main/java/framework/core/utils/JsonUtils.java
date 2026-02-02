@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class JsonUtils {
@@ -132,7 +133,7 @@ public class JsonUtils {
      * @return 转换后结果
      * @param <T> 转换类型
      */
-    public static <T> T StringToList(String str, Class<T> clazz) {
+    public static <T> List<T> StringToList(String str, Class<T> clazz) {
         if (!StringUtils.hasLength(str) ||  clazz == null) {
             return null;
         }
@@ -165,5 +166,14 @@ public class JsonUtils {
             log.warn(e.getMessage());
             return null;
         }
+    }
+
+    /**
+     * 类转map
+     * @param object 类
+     * @return map
+     */
+    public static Map<String, Object> convertToMap(Object object) {
+        return OBJECT_MAPPER.convertValue(object, Map.class);
     }
 }
