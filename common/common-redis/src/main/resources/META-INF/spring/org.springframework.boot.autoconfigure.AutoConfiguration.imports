@@ -1,2 +1,3 @@
 framework.redis.config.RedisConfig
 framework.redis.service.RedisService
+framework.redis.service.RedissonLockService
