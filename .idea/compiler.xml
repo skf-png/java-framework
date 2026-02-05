@@ -9,11 +9,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="templateservice" />
         <module name="common-security" />
+        <module name="common-rabbitmq" />
         <module name="common-domain" />
         <module name="templateapi" />
         <module name="common-redis" />
         <module name="gateway" />
         <module name="common-core" />
+        <module name="common-cache" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -23,8 +25,10 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="common" options="" />
+      <module name="common-cache" options="-parameters" />
       <module name="common-core" options="-parameters" />
       <module name="common-domain" options="-parameters" />
+      <module name="common-rabbitmq" options="-parameters" />
       <module name="common-redis" options="-parameters" />
       <module name="common-security" options="-parameters" />
       <module name="framework" options="" />
