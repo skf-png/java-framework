@@ -10,6 +10,10 @@
     <file url="file://$PROJECT_DIR$/common/common-security/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/file/file-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/file/file-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/file/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/file/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />

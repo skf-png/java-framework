@@ -1,4 +1,4 @@
-package framework.core.security.handler;
+package framework.gateway.handler;
 import framework.domain.R;
 import framework.domain.ResultCode;
 import framework.domain.ServiceException;
@@ -6,6 +6,7 @@ import framework.core.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.reactive.resource.NoResourceFoundException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+@Order(-1)
 @Configuration
 @Slf4j
 public class GatewayExceptionHandler implements ErrorWebExceptionHandler {

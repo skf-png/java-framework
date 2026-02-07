@@ -13,9 +13,11 @@
         <module name="common-domain" />
         <module name="templateapi" />
         <module name="common-redis" />
+        <module name="file-service" />
         <module name="gateway" />
         <module name="common-core" />
         <module name="common-cache" />
+        <module name="file-api" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -31,6 +33,9 @@
       <module name="common-rabbitmq" options="-parameters" />
       <module name="common-redis" options="-parameters" />
       <module name="common-security" options="-parameters" />
+      <module name="file" options="" />
+      <module name="file-api" options="-parameters" />
+      <module name="file-service" options="-parameters" />
       <module name="framework" options="" />
       <module name="gateway" options="-parameters" />
       <module name="template" options="" />

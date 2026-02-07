@@ -16,7 +16,7 @@ public class CacheCaffeineConfig {
     @Value("${caffeine.build.maximum-size:1024}")
     private Long maximumSize;
     //存活时间
-    @Value("${caffeine.build.expire-time}")
+    @Value("${caffeine.build.expire-time:20}")
     private Long expireTimeout;
 
     @Bean

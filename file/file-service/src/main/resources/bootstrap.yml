@@ -1,6 +1,6 @@
 spring:
   application:
-    name: mstemplate  # 应用名称
+    name: file  # 应用名称
   profiles:
     active: dev     # 激活的环境（通过环境变量RUN_ENV指定）
   cloud:
@@ -12,12 +12,7 @@ spring:
         namespace: 315ee259-7aee-47b0-b74e-acf7420f00e7
         server-addr: 8.140.214.12:8848
         shared-configs:
-          - data-id: shared-thread-dev.yaml
-          - data-id: shared-redis-dev.yaml
-          - data-id: share-caffeine-dev.yaml
-
-
-#        file-extension: yaml  # 配置文件格式为yaml
+        file-extension: yaml  # 配置文件格式为yaml
 
 # 日志输出格式配置
 logging:

@@ -13,7 +13,7 @@ spring:
       config:              # Nacos配置中心配置
 #        username: nacos
 #        password: bite@123
-        namespace: 3123
+        namespace: 315ee259-7aee-47b0-b74e-acf7420f00e7
         server-addr: 8.140.214.12:8848
         file-extension: yaml  # 配置文件格式为yaml
 

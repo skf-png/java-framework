@@ -2,6 +2,7 @@ package framework.redis.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import framework.core.utils.JsonUtils;
+import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
@@ -14,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class RedisService {
-    @Autowired
-    private static RedisTemplate redisTemplate;
+    @Resource
+    private RedisTemplate redisTemplate;
 
     //---------------------------------------基本操作-----------------------------------
 
@@ -159,6 +160,15 @@ public class RedisService {
         }
         //将object转换成json字符串，再转换成类
         return JsonUtils.StringToObject(JsonUtils.ObjectToString(object), clazz);
+    }
+
+    public <T> T getCacheObject(final String key, final TypeReference<T> typeReference) {
+        Object object = redisTemplate.opsForValue().get(key);
+        if (object == null) {
+            return null;
+        }
+        //将object转换成json字符串，再转换成类
+        return JsonUtils.StringToObject(JsonUtils.ObjectToString(object), typeReference);
     }
     //---------------------------------------列表操作-----------------------------------
 
