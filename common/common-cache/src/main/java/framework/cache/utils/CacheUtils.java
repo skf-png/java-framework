@@ -64,4 +64,18 @@ public class CacheUtils {
         redisService.setCacheObject(key, value, timeout, timeUnit);
         caffeineCache.put(key, value);
     }
+
+    /**
+     * 永久存储到redis中
+     * @param redisService
+     * @param key
+     * @param value
+     * @param caffeineCache
+     * @param <T>
+     */
+    public static <T> void setL2Cache(RedisService redisService, String key, T value,
+                                      Cache<String, Object> caffeineCache) {
+        redisService.setCacheObject(key, value);
+        caffeineCache.put(key, value);
+    }
 }

@@ -1,1 +1,2 @@
 framework.core.config.ThreadPoolConfig
+framework.core.config.RestTemplateConfig

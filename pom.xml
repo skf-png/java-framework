@@ -19,6 +19,7 @@
         <module>gateway</module>
         <module>common</module>
         <module>file</module>
+        <module>admin</module>
     </modules>
 
     <properties>

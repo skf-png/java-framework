@@ -10,11 +10,13 @@
         <module name="templateservice" />
         <module name="common-security" />
         <module name="common-rabbitmq" />
-        <module name="common-domain" />
-        <module name="templateapi" />
+        <module name="admin-api" />
         <module name="common-redis" />
         <module name="file-service" />
+        <module name="common-domain" />
+        <module name="templateapi" />
         <module name="gateway" />
+        <module name="admin-service" />
         <module name="common-core" />
         <module name="common-cache" />
         <module name="file-api" />
@@ -26,6 +28,9 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="admin" options="" />
+      <module name="admin-api" options="-parameters" />
+      <module name="admin-service" options="-parameters" />
       <module name="common" options="" />
       <module name="common-cache" options="-parameters" />
       <module name="common-core" options="-parameters" />
