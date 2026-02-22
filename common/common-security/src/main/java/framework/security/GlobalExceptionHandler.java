@@ -93,9 +93,9 @@ public class GlobalExceptionHandler {
     public R<?> handleServiceException(ServiceException e, HttpServletRequest request,
                                        HttpServletResponse response) {
         String requestURI = request.getRequestURI();
-        log.error("请求地址'{}',发生业务异常", requestURI,  e);
+        log.error("请求地址'{}',发生业务异常", requestURI,  e.getMsg(), e);
         setResponseCode(response,e.getCode());
-        return R.fail(e.getCode(), e.getMessage());
+        return R.fail(e.getCode(), e.getMsg());
     }
 
     /**

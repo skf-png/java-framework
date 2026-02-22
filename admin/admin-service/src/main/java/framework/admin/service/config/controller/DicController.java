@@ -11,6 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @Slf4j
 public class DicController implements DicFeignClient {
@@ -50,6 +53,30 @@ public class DicController implements DicFeignClient {
     @Override
     public R<Long> editDicData(DicDataEditReqDTO dicDataEditReqDTO) {
         Long res = dicService.editDicData(dicDataEditReqDTO);
+        return R.success(res);
+    }
+
+    @Override
+    public R<List<DicDataDTO>> getDicDataByType(String typeKey) {
+        List<DicDataDTO> res = dicService.getDicDataByType(typeKey);
+        return R.success(res);
+    }
+
+    @Override
+    public R<Map<String, List<DicDataDTO>>> getDicDataByTypes(List<String> typeKeys) {
+        Map<String, List<DicDataDTO>> res = dicService.getDicDataByTypes(typeKeys);
+        return R.success(res);
+    }
+
+    @Override
+    public R<DicDataDTO> getDicDataByKey(String dataKey) {
+        DicDataDTO res = dicService.getDicDataByKey(dataKey);
+        return R.success(res);
+    }
+
+    @Override
+    public R<List<DicDataDTO>> getDicDataByKeys(List<String> datakeys) {
+        List<DicDataDTO> res = dicService.getDicDataByKeys(datakeys);
         return R.success(res);
     }
 }

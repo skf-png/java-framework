@@ -15,8 +15,15 @@ import framework.core.utils.BeanCopyUtil;
 import framework.core.utils.StringUtil;
 import framework.domain.ServiceException;
 import framework.domain.domain.VO.BasePageVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class DicServiceImpl implements DicService {
@@ -179,5 +186,54 @@ public class DicServiceImpl implements DicService {
         sysDicDataMapper.updateById(sysDicData);
         //4. 返回结果
         return sysDicData.getId();
+    }
+
+    @Override
+    public List<DicDataDTO> getDicDataByType(String typeKey) {
+        //1. 获取数据
+        List<SysDicData> datas = sysDicDataMapper.selectList(new LambdaQueryWrapper<SysDicData>().eq(SysDicData::getTypeKey, typeKey));
+        //2. 类型转换
+        List<DicDataDTO> res = BeanCopyUtil.copyListProperties(datas, DicDataDTO::new);
+        return res;
+    }
+
+    @Override
+    public Map<String, List<DicDataDTO>> getDicDataByTypes(List<String> typeKeys) {
+        //1. 获取数据
+        List<SysDicData> data = sysDicDataMapper.selectList(new LambdaQueryWrapper<SysDicData>().in(SysDicData::getTypeKey, typeKeys));
+        //2. 转换类型
+        List<DicDataDTO> dicDataDTOS = BeanCopyUtil.copyListProperties(data, DicDataDTO::new);
+        //3. 转换成map
+        Map<String, List<DicDataDTO>> res = new HashMap<>();
+        for (DicDataDTO dicDataDTO : dicDataDTOS) {
+            List<DicDataDTO> value;
+            if (res.get(dicDataDTO.getTypeKey()) == null) {
+                value = new ArrayList<>();
+                value.add(dicDataDTO);
+                res.put(dicDataDTO.getTypeKey(), value);
+            } else {
+                value = res.get(dicDataDTO.getTypeKey());
+                value.add(dicDataDTO);
+            }
+        }
+        return res;
+    }
+
+    @Override
+    public DicDataDTO getDicDataByKey(String datakey) {
+        //1. 获取
+        SysDicData data = sysDicDataMapper.selectOne(new LambdaQueryWrapper<SysDicData>().eq(SysDicData::getDataKey, datakey));
+        //2. 转换
+        DicDataDTO res = new DicDataDTO();
+        BeanUtils.copyProperties(data, res);
+        return res;
+    }
+
+    @Override
+    public List<DicDataDTO> getDicDataByKeys(List<String> datakeys) {
+        List<SysDicData> datas = sysDicDataMapper.selectList(new LambdaQueryWrapper<SysDicData>().in(SysDicData::getDataKey, datakeys));
+        List<DicDataDTO> res = BeanCopyUtil.copyListProperties(datas, DicDataDTO::new);
+
+        return res;
     }
 }
