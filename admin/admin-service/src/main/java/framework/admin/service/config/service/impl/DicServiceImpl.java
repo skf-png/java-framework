@@ -225,6 +225,10 @@ public class DicServiceImpl implements DicService {
         SysDicData data = sysDicDataMapper.selectOne(new LambdaQueryWrapper<SysDicData>().eq(SysDicData::getDataKey, datakey));
         //2. 转换
         DicDataDTO res = new DicDataDTO();
+        //防止data==null时候转换报错
+        if  (data == null) {
+            return null;
+        }
         BeanUtils.copyProperties(data, res);
         return res;
     }

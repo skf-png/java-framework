@@ -6,6 +6,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import framework.admin.api.map.constants.MapConstants;
 import framework.admin.api.map.domain.DTO.LocationReqDTO;
 import framework.admin.api.map.domain.DTO.PlaceSearchReqDTO;
+import framework.admin.service.config.service.ArgumentService;
 import framework.admin.service.map.domain.DTO.*;
 import framework.admin.service.map.domain.entity.SysRegion;
 import framework.admin.service.map.mapper.RegionMapper;
@@ -38,6 +39,9 @@ public class MapServiceImpl implements MapService {
 
     @Autowired
     private IMapProvider mapProvider;
+
+    @Autowired
+    private ArgumentService argumentService;
     /**
      * 初始化缓存
      */
@@ -127,7 +131,7 @@ public class MapServiceImpl implements MapService {
             return list;
         }
         //字符串分割
-        String hotCityIds = "35,108,234,236,289,342";
+        String hotCityIds = argumentService.getConfigKey(MapConstants.CONFIG_KEY).getValue();
         Long[] ids = Arrays.stream(hotCityIds.split(",")).map(Long::valueOf).toArray(Long[]::new);
         //从redis的城市列表中查询
         list = CacheUtils.getL2Cache(redisService, MapConstants.CACHE_MAP_CITY_KEY,

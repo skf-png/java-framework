@@ -57,26 +57,26 @@ public class DicController implements DicFeignClient {
     }
 
     @Override
-    public R<List<DicDataDTO>> getDicDataByType(String typeKey) {
+    public List<DicDataDTO> getDicDataByType(String typeKey) {
         List<DicDataDTO> res = dicService.getDicDataByType(typeKey);
-        return R.success(res);
+        return res;
     }
 
     @Override
-    public R<Map<String, List<DicDataDTO>>> getDicDataByTypes(List<String> typeKeys) {
+    public Map<String, List<DicDataDTO>> getDicDataByTypes(List<String> typeKeys) {
         Map<String, List<DicDataDTO>> res = dicService.getDicDataByTypes(typeKeys);
-        return R.success(res);
+        return res;
     }
 
     @Override
-    public R<DicDataDTO> getDicDataByKey(String dataKey) {
+    public DicDataDTO getDicDataByKey(String dataKey) {
         DicDataDTO res = dicService.getDicDataByKey(dataKey);
-        return R.success(res);
+        return res;
     }
 
     @Override
-    public R<List<DicDataDTO>> getDicDataByKeys(List<String> datakeys) {
+    public List<DicDataDTO> getDicDataByKeys(List<String> datakeys) {
         List<DicDataDTO> res = dicService.getDicDataByKeys(datakeys);
-        return R.success(res);
+        return res;
     }
 }
