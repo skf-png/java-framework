@@ -49,6 +49,16 @@
             <artifactId>common-domain</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>common-security</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>common-redis</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <properties>

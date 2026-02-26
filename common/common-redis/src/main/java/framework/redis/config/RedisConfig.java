@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter;
 
 @Configuration
 public class RedisConfig {
-    @Bean
+    @Bean("MyRedisTemplate")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);

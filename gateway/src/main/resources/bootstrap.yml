@@ -16,7 +16,10 @@ spring:
         namespace: 315ee259-7aee-47b0-b74e-acf7420f00e7
         server-addr: 8.140.214.12:8848
         file-extension: yaml  # 配置文件格式为yaml
-
+        shared-configs:
+          - data-id: shared-redis-dev.yaml
+  main:
+    web-application-type: reactive  # 核心配置：指定为响应式 Web 类型
 # 日志输出格式配置
 logging:
   pattern:

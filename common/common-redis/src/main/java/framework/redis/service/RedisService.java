@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class RedisService {
-    @Resource
+    @Resource(name = "MyRedisTemplate")
     private RedisTemplate redisTemplate;
 
     //---------------------------------------基本操作-----------------------------------
