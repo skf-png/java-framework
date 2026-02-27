@@ -1,9 +1,12 @@
 package framework.admin.service.user.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import framework.admin.service.user.domain.DTO.SysUserDTO;
 import framework.core.entity.BaseDO;
+import framework.core.utils.AESUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.beans.BeanUtils;
 
 /**
  * 系统用户对象 sys_user
@@ -42,4 +45,11 @@ public class SysUser extends BaseDO {
      * 备注
      */
     private String remark;
+
+    public SysUserDTO convertDTO() {
+        SysUserDTO sysUserDTO = new SysUserDTO();
+        BeanUtils.copyProperties(this, sysUserDTO);
+        sysUserDTO.setPhoneNumber(AESUtil.decryptHex(this.phoneNumber));
+        return sysUserDTO;
+    }
 }
