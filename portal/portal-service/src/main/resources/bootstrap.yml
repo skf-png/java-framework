@@ -1,9 +1,9 @@
 server:
-  port: 18081
+  port: 18082
 
 spring:
   application:
-    name: admin  # 应用名称
+    name: portal  # 应用名称
   profiles:
     active: dev     # 激活的环境（通过环境变量RUN_ENV指定）
   cloud:
@@ -19,8 +19,6 @@ spring:
           - data-id: shared-redis-dev.yaml
           - data-id: share-caffeine-dev.yaml
           - data-id: share-mysql-dev.yaml
-          - data-id: share-map-dev.yaml
-          - data-id: shared-user-dev.yaml
 
 
 #        file-extension: yaml  # 配置文件格式为yaml

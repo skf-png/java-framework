@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(value = "admin")
+@FeignClient(value = "admin", contextId = "dicFeignClient")
 public interface DicFeignClient {
     /**
      * 增加字典类型

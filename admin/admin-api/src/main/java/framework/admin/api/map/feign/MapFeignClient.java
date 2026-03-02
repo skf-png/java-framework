@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(value = "admin")
+@FeignClient(value = "admin", contextId = "mapFeignClient")
 public interface MapFeignClient {
     /**
      * 获取所有城市信息

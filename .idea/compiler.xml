@@ -13,6 +13,8 @@
         <module name="admin-api" />
         <module name="common-redis" />
         <module name="file-service" />
+        <module name="portal-api" />
+        <module name="portal-service" />
         <module name="common-domain" />
         <module name="templateapi" />
         <module name="gateway" />
@@ -43,6 +45,9 @@
       <module name="file-service" options="-parameters" />
       <module name="framework" options="" />
       <module name="gateway" options="-parameters" />
+      <module name="portal" options="" />
+      <module name="portal-api" options="-parameters" />
+      <module name="portal-service" options="-parameters" />
       <module name="template" options="" />
       <module name="templateapi" options="-parameters" />
       <module name="templateservice" options="-parameters" />

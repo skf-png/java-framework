@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(value = "admin", path = "/argument")
+@FeignClient(value = "admin", path = "/argument", contextId = "argumentFeignClient")
 public interface ArgumentFeignClient {
     /**
      * 根据主键查询参数
