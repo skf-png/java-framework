@@ -19,6 +19,7 @@ spring:
           - data-id: shared-redis-dev.yaml
           - data-id: share-caffeine-dev.yaml
           - data-id: share-mysql-dev.yaml
+          - data-id: shared-sms-dev.yaml
 
 
 #        file-extension: yaml  # 配置文件格式为yaml

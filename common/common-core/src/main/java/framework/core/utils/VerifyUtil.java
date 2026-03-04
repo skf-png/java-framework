@@ -1,5 +1,6 @@
 package framework.core.utils;
 
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,5 +24,20 @@ public class VerifyUtil {
     public static boolean checkPhone(String phone) {
         Matcher m = PHONE_PATTERN.matcher(phone);
         return m.matches();
+    }
+
+    /**
+     * 随机生成验证码
+     * @param size 验证码长度
+     * @return 验证码
+     */
+    public static String generateVerifyCode(int size) {
+        String source = NUMBER_VERIFY_CODES;
+        Random random = new Random(System.currentTimeMillis());
+        StringBuilder result = new StringBuilder(size);
+        for (int i = 0; i < size; i++) {
+            result.append(source.charAt(random.nextInt(source.length())));
+        }
+        return result.toString();
     }
 }

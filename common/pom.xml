@@ -18,6 +18,7 @@
         <module>common-redis</module>
         <module>common-cache</module>
         <module>common-rabbitmq</module>
+        <module>common-message</module>
     </modules>
 
     <properties>

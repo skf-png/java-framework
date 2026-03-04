@@ -2,9 +2,11 @@ package framework.portal.service.impl;
 
 import framework.admin.api.appuser.domain.VO.AppUserVo;
 import framework.admin.api.appuser.feign.AppUserFeignClient;
+import framework.core.utils.VerifyUtil;
 import framework.domain.R;
 import framework.domain.ResultCode;
 import framework.domain.ServiceException;
+import framework.message.service.CaptchaService;
 import framework.portal.domain.DTO.LoginDTO;
 import framework.portal.domain.DTO.WechatLoginDTO;
 import framework.portal.service.UserService;
@@ -25,6 +27,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private CaptchaService captchaService;
+
     @Override
     public TokenDTO login(LoginDTO loginDTO) {
         LoginUserDTO loginUserDTO = new LoginUserDTO();
@@ -39,6 +44,14 @@ public class UserServiceImpl implements UserService {
         //3. 设置缓存
         loginUserDTO.setUserFrom("app");
         return tokenService.createToken(loginUserDTO);
+    }
+
+    @Override
+    public String sendCode(String phone) {
+        if (!VerifyUtil.checkPhone(phone)) {
+            throw new ServiceException(ResultCode.INVALID_PARA.getCode(),"手机号格式错误");
+        }
+        return captchaService.sendCode(phone);
     }
 
     /**

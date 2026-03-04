@@ -7,4 +7,6 @@ import framework.security.domain.DTO.TokenDTO;
 public interface UserService {
 
     TokenDTO login(LoginDTO wechatLoginDTO);
+
+    String sendCode(String phone);
 }

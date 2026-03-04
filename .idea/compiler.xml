@@ -14,6 +14,7 @@
         <module name="common-redis" />
         <module name="file-service" />
         <module name="portal-api" />
+        <module name="common-message" />
         <module name="portal-service" />
         <module name="common-domain" />
         <module name="templateapi" />
@@ -37,6 +38,7 @@
       <module name="common-cache" options="-parameters" />
       <module name="common-core" options="-parameters" />
       <module name="common-domain" options="-parameters" />
+      <module name="common-message" options="-parameters" />
       <module name="common-rabbitmq" options="-parameters" />
       <module name="common-redis" options="-parameters" />
       <module name="common-security" options="-parameters" />
