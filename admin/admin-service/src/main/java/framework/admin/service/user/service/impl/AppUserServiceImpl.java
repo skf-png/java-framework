@@ -67,4 +67,44 @@ public class AppUserServiceImpl implements AppUserService {
         appUserDTO.setPhoneNumber(AESUtil.decryptHex(appUser.getPhoneNumber()));
         return appUserDTO;
     }
+
+    @Override
+    public AppUserDTO findByPhone(String phoneNumber) {
+        //1. 校验
+        if (StringUtils.isEmpty(phoneNumber)) {
+            return null;
+        }
+        //2. 查询(手机号加密)
+        AppUser user = appUserMapper.selectOne(new  LambdaQueryWrapper<AppUser>()
+                .eq(AppUser::getPhoneNumber, AESUtil.encryptHex(phoneNumber)));
+        if (user == null) {
+            return null;
+        }
+        //3. 参数转换(手机号解密)
+        AppUserDTO appUserDTO = new AppUserDTO();
+        BeanUtils.copyProperties(user, appUserDTO);
+        appUserDTO.setUserId(user.getId());
+        appUserDTO.setPhoneNumber(AESUtil.decryptHex(user.getPhoneNumber()));
+        return appUserDTO;
+    }
+
+    @Override
+    public AppUserDTO registerByPhone(String phoneNumber) {
+        //1. 参数校验
+        if (StringUtils.isEmpty(phoneNumber)) {
+            throw new ServiceException("手机号不能为空！");
+        }
+        //2. 新增
+        AppUser appUser = new AppUser();
+        appUser.setPhoneNumber(AESUtil.encryptHex(phoneNumber));
+        appUser.setNickName("user_" +(int)(Math.random() * 9000) + 1000);
+        appUser.setAvatar(defaultAvatar);
+        appUserMapper.insert(appUser);
+        //3. 返回结果
+        AppUserDTO appUserDTO = new AppUserDTO();
+        BeanUtils.copyProperties(appUser, appUserDTO);
+        appUserDTO.setUserId(appUser.getId());
+        appUserDTO.setPhoneNumber(phoneNumber);
+        return appUserDTO;
+    }
 }

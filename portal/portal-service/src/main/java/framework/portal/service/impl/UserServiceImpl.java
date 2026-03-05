@@ -7,13 +7,13 @@ import framework.domain.R;
 import framework.domain.ResultCode;
 import framework.domain.ServiceException;
 import framework.message.service.CaptchaService;
+import framework.portal.domain.DTO.CodeLoginDTO;
 import framework.portal.domain.DTO.LoginDTO;
 import framework.portal.domain.DTO.WechatLoginDTO;
 import framework.portal.service.UserService;
 import framework.security.domain.DTO.LoginUserDTO;
 import framework.security.domain.DTO.TokenDTO;
 import framework.security.service.TokenService;
-import framework.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,11 +40,15 @@ public class UserServiceImpl implements UserService {
         //2. 判断类型
         if (loginDTO instanceof WechatLoginDTO wechatLoginDTO) {
             loginBywechat(wechatLoginDTO, loginUserDTO);
+        } else if (loginDTO instanceof CodeLoginDTO codeLoginDTO) {
+            loginByCode(codeLoginDTO, loginUserDTO);
         }
         //3. 设置缓存
         loginUserDTO.setUserFrom("app");
         return tokenService.createToken(loginUserDTO);
     }
+
+
 
     @Override
     public String sendCode(String phone) {
@@ -75,6 +79,38 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 手机号登录
+     * @param codeLoginDTO
+     * @param loginUserDTO
+     */
+    private void loginByCode(CodeLoginDTO codeLoginDTO, LoginUserDTO loginUserDTO) {
+        //1. 参数校验
+        if (!VerifyUtil.checkPhone(codeLoginDTO.getPhone())) {
+            throw new ServiceException(ResultCode.INVALID_PARA.getCode(), "手机号格式错误");
+        }
+        //2. 执行查询
+        AppUserVo appUserVo = null;
+        R<AppUserVo> res = appUserFeignClient.findByPhone(codeLoginDTO.getPhone());
+        if (res == null || res.getCode() != ResultCode.SUCCESS.getCode() || res.getData() == null) {
+            appUserVo = register(codeLoginDTO);
+        } else {
+            appUserVo = res.getData();
+        }
+        //3. 验证码校验
+        String code = captchaService.getCode(codeLoginDTO.getPhone());
+        if (code == null) {
+            throw new ServiceException(ResultCode.INVALID_CODE);
+        }
+        if (!code.equals(codeLoginDTO.getCode())) {
+            throw new ServiceException(ResultCode.ERROR_CODE);
+        }
+        //4. 登录信息设置
+        captchaService.deleteCode(codeLoginDTO.getPhone());
+        loginUserDTO.setUserId(appUserVo.getUserId());
+        loginUserDTO.setUserName(appUserVo.getNickName());
+    }
+
+    /**
      * 根据入参注册
      * @param loginDTO
      * @return
@@ -83,6 +119,11 @@ public class UserServiceImpl implements UserService {
         R<AppUserVo> res = new R<>();
         if (loginDTO instanceof WechatLoginDTO wechatLoginDTO) {
             res = appUserFeignClient.registerByOpenId(wechatLoginDTO.getOpenId());
+            if (res == null || res.getCode() != ResultCode.SUCCESS.getCode() || res.getData() == null) {
+                log.error("用户注册失败");
+            }
+        } else if (loginDTO instanceof CodeLoginDTO codeLoginDto) {
+            res = appUserFeignClient.registerByPhone(codeLoginDto.getPhone());
             if (res == null || res.getCode() != ResultCode.SUCCESS.getCode() || res.getData() == null) {
                 log.error("用户注册失败");
             }

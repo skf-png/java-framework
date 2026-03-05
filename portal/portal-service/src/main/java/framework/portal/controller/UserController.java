@@ -2,6 +2,7 @@ package framework.portal.controller;
 
 import framework.domain.R;
 import framework.domain.domain.VO.TokenVO;
+import framework.portal.domain.DTO.CodeLoginDTO;
 import framework.portal.domain.DTO.WechatLoginDTO;
 import framework.portal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,15 @@ public class UserController {
     @GetMapping("/send_code")
     public R<String> sendCode(String phone) {
         return R.success(userService.sendCode(phone));
+    }
+
+    /**
+     * 验证码登录
+     * @param codeLoginDTO 验证码登录信息
+     * @return token信息VO
+     */
+    @PostMapping("/login/code")
+    public R<TokenVO> login(@RequestBody @Validated CodeLoginDTO codeLoginDTO) {
+        return R.success(userService.login(codeLoginDTO).convertToVo());
     }
 }
