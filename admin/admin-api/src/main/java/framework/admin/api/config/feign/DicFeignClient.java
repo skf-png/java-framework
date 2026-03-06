@@ -30,7 +30,7 @@ public interface DicFeignClient {
      * @param dicTypeListReqDTO 查看请求
      * @return 分页结果
      */
-    @GetMapping("/dictionary_type/list")
+    @PostMapping("/dictionary_type/list")
     R<BasePageVO<DicTypeVO>> listType(@RequestBody(required = false) DicTypeListReqDTO dicTypeListReqDTO);
 
     /**
@@ -54,7 +54,7 @@ public interface DicFeignClient {
      * @param dicDataListReqDTO 查看请求
      * @return 分页结果
      */
-    @GetMapping("/dictionary_data/list")
+    @PostMapping("/dictionary_data/list")
     R<BasePageVO<DicDataVO>> listDicData(@RequestBody(required = false) @Validated DicDataListReqDTO dicDataListReqDTO);
 
     /**

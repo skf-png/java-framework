@@ -39,7 +39,7 @@ public class ArgumentController implements ArgumentFeignClient {
      * @param argumentListReqDTO 请求信息
      * @return 分页参数信息
      */
-    @GetMapping("/list")
+    @PostMapping("/list")
     public R<BasePageVO<ArgumentVO>> list (@Validated @RequestBody ArgumentListReqDTO argumentListReqDTO){
         BasePageVO<ArgumentVO> res = argumentService.list(argumentListReqDTO);
         return R.success(res);

@@ -193,10 +193,10 @@ public class AppUserServiceImpl implements AppUserService {
             if (appUserListReqDTO.getUserId() != null) {
                 queryWrapper.eq(AppUser::getId, appUserListReqDTO.getUserId());
             }
-            if (appUserListReqDTO.getPhoneNumber() != null) {
+            if (StringUtils.isNotEmpty(appUserListReqDTO.getPhoneNumber())) {
                 queryWrapper.eq(AppUser::getPhoneNumber, AESUtil.encryptHex(appUserListReqDTO.getPhoneNumber()));
             }
-            if (appUserListReqDTO.getNickName() != null) {
+            if (StringUtils.isNotEmpty(appUserListReqDTO.getNickName())) {
                 queryWrapper.like(AppUser::getNickName, appUserListReqDTO.getNickName());
             }
             if (appUserListReqDTO.getOpenId() != null) {

@@ -15,6 +15,7 @@ import framework.core.utils.BeanCopyUtil;
 import framework.core.utils.StringUtil;
 import framework.domain.ServiceException;
 import framework.domain.domain.VO.BasePageVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -58,10 +59,10 @@ public class DicServiceImpl implements DicService {
     public BasePageVO<DicTypeVO> listType(DicTypeListReqDTO dicTypeListReqDTO) {
         //1. 构建查询sql
         LambdaQueryWrapper<SysDicType> queryWrapper = new LambdaQueryWrapper<>();
-        if (dicTypeListReqDTO.getValue() != null) {
+        if (StringUtils.isNoneBlank(dicTypeListReqDTO.getValue())) {
             queryWrapper.likeRight(SysDicType::getValue, dicTypeListReqDTO.getValue());
         }
-        if (dicTypeListReqDTO.getTypeKey() != null) {
+        if (StringUtils.isNoneBlank(dicTypeListReqDTO.getTypeKey())) {
             queryWrapper.eq(SysDicType::getTypeKey, dicTypeListReqDTO.getTypeKey());
         }
         //2. 分页查询
@@ -139,7 +140,7 @@ public class DicServiceImpl implements DicService {
         //1. 构建查询sql
         LambdaQueryWrapper<SysDicData> lambdaWrapper = new LambdaQueryWrapper<>();
         lambdaWrapper.eq(SysDicData::getTypeKey, dicDataListReqDTO.getTypeKey());
-        if (dicDataListReqDTO.getValue() != null) {
+        if (StringUtils.isNoneBlank(dicDataListReqDTO.getValue())) {
             lambdaWrapper.likeRight(SysDicData::getValue, dicDataListReqDTO.getValue());
         }
         //排序
