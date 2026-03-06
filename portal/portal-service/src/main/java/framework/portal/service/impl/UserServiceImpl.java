@@ -1,7 +1,9 @@
 package framework.portal.service.impl;
 
+import framework.admin.api.appuser.domain.DTO.UserEditReqDTO;
 import framework.admin.api.appuser.domain.VO.AppUserVo;
 import framework.admin.api.appuser.feign.AppUserFeignClient;
+import framework.core.utils.BeanCopyUtil;
 import framework.core.utils.VerifyUtil;
 import framework.domain.R;
 import framework.domain.ResultCode;
@@ -9,12 +11,16 @@ import framework.domain.ServiceException;
 import framework.message.service.CaptchaService;
 import framework.portal.domain.DTO.CodeLoginDTO;
 import framework.portal.domain.DTO.LoginDTO;
+import framework.portal.domain.DTO.UserDTO;
 import framework.portal.domain.DTO.WechatLoginDTO;
 import framework.portal.service.UserService;
 import framework.security.domain.DTO.LoginUserDTO;
 import framework.security.domain.DTO.TokenDTO;
 import framework.security.service.TokenService;
+import framework.security.utils.JwtUtil;
+import framework.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +62,55 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(ResultCode.INVALID_PARA.getCode(),"手机号格式错误");
         }
         return captchaService.sendCode(phone);
+    }
+
+    @Override
+    public String edit(UserEditReqDTO userEditReqDTO) {
+        //1. 用户只能修改自己的
+        LoginUserDTO loginUser = tokenService.getLoginUser();
+        if (loginUser.getUserId().longValue() != userEditReqDTO.getUserId().longValue()) {
+            throw new ServiceException(ResultCode.INVALID_PARA.getCode(), "userId错误");
+        }
+        R<Void> edit = appUserFeignClient.edit(userEditReqDTO);
+        if (edit == null || edit.getCode() != ResultCode.SUCCESS.getCode()) {
+            throw new ServiceException("修改失败");
+        }
+        //2. 更新redis数据库
+        loginUser.setUserName(userEditReqDTO.getNickName());
+        TokenDTO token = tokenService.createToken(loginUser);
+        return token.getAccessToken();
+    }
+
+    @Override
+    public UserDTO getLoginUser() {
+        //1. 获取登录信息
+        LoginUserDTO loginUser = tokenService.getLoginUser();
+        if (loginUser == null) {
+            throw new ServiceException(ResultCode.INVALID_PARA.getCode(), "用户令牌错误");
+        }
+        //2. 根据id获取数据库中的信息
+        R<AppUserVo> byId = appUserFeignClient.findById(loginUser.getUserId());
+        if (byId == null || byId.getCode() != ResultCode.SUCCESS.getCode() || byId.getData() == null) {
+            throw new ServiceException(ResultCode.INVALID_PARA.getCode(), "用户查询错误");
+        }
+        //3. 返回结果
+        UserDTO userDTO = new UserDTO();
+        BeanCopyUtil.copyProperties(byId.getData(), userDTO);
+        BeanCopyUtil.copyProperties(loginUser, userDTO);
+        return userDTO;
+    }
+
+    @Override
+    public void logout() {
+        String token = SecurityUtil.getToken();
+        if (StringUtils.isEmpty(token)) {
+            return;
+        }
+        String userName = JwtUtil.getUserName(token);
+        String userId = JwtUtil.getUserId(token);
+        log.info("{}退出了系统, 用户ID{}", userName, userId);
+        // 2 删除用户缓存记录
+        tokenService.delLoginUser(token);
     }
 
     /**

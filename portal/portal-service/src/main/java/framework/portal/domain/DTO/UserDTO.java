@@ -1,0 +1,29 @@
+package framework.portal.domain.DTO;
+
+import framework.portal.domain.VO.UserVo;
+import framework.security.domain.DTO.LoginUserDTO;
+import lombok.Data;
+import org.springframework.beans.BeanUtils;
+
+/**
+ * C端用户DTO
+ */
+@Data
+public class UserDTO extends LoginUserDTO {
+
+    /**
+     * 用户头像
+     */
+    private String avatar;
+
+    /**
+     * 对象转换
+     * @return
+     */
+    public UserVo convertToVO() {
+        UserVo userVo = new UserVo();
+        BeanUtils.copyProperties(this, userVo);
+        userVo.setNickName(this.getUserName());
+        return userVo;
+    }
+}

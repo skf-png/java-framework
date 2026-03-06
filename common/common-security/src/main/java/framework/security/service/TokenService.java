@@ -74,6 +74,7 @@ public class TokenService {
      * @param loginUserDTO
      */
     public void refreshToken(LoginUserDTO loginUserDTO) {
+        delLoginUser();
         loginUserDTO.setLoginTime(System.currentTimeMillis());
         loginUserDTO.setExpireTime(loginUserDTO.getLoginTime() + EXPIRE_TIME * MILLIS_MINUTE);
         String userKey = getUserKey(loginUserDTO.getUserKey());
@@ -145,6 +146,17 @@ public class TokenService {
      * @param token 令牌
      */
     public void delLoginUser(String token) {
+        if (StringUtils.isNotEmpty(token)) {
+            String useKey = JwtUtil.getUserKey(token);
+            redisService.deleteObject(getUserKey(useKey));
+        }
+    }
+
+    /**
+     * 删除自己用户的登录态
+     */
+    public void delLoginUser() {
+        String token = SecurityUtil.getToken();
         if (StringUtils.isNotEmpty(token)) {
             String useKey = JwtUtil.getUserKey(token);
             redisService.deleteObject(getUserKey(useKey));
